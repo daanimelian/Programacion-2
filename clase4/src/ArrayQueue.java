@@ -1,3 +1,4 @@
+/*
 public class ArrayQueue<X> implements Queue<X>{
     private int f;
     private int r;
@@ -13,3 +14,4 @@ public class ArrayQueue<X> implements Queue<X>{
     }
 
     }
+*/

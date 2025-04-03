@@ -1,4 +1,4 @@
-public interface Queue<E>{
+/*public interface Queue<E>{
 
     public void enqueue(E elemento);
     public E dequeue();
@@ -6,4 +6,4 @@ public interface Queue<E>{
     public boolean isEmpty();
     public int size();
 
-    }
+    }*/

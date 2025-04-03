@@ -1,4 +1,4 @@
-package src.clase1;
+package clase1;
 
 public class ejercicio_3 {
 
