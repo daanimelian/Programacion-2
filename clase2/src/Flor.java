@@ -1,4 +1,4 @@
-/*Implemente una clase Java llamada Flor que tenga tres atributos de tipo String, int
+package clase2.src;/*Implemente una clase Java llamada Flor que tenga tres atributos de tipo String, int
 y float, que respectivamente representen el nombre de la flor, el número de
 pétalos y precio. Se debe incluir un constructor que permita inicializar cada uno
 de los atributos y un constructor que inicialice la flor por defecto con nombre
