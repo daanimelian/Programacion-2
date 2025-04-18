@@ -11,31 +11,36 @@ public class LinkedList<T> implements List<T> {
     public LinkedList() {}
 
     private void addFirst(Node<T> n) {
-        n.setNext(this.head);
-        this.head = n;
         if (this.size == 0) {
+            this.head = n;
             this.tail = n;
+            n.setPrev(null);
+            n.setNext(null);
+        } else {
+            n.setNext(this.head);
+            this.head.setPrev(n);
+            n.setPrev(null);
+            this.head = n;
         }
         ++this.size;
     }
 
     public void addFirst(T temp) {
-        Node<T> aux = new Node(temp);
+        Node<T> aux = new Node<>(temp);
         this.addFirst(aux);
     }
 
 
     private void addLast(Node<T> n) {
-        if (this.head == null) {
+        if (this.size == 0) {
             this.head = n;
             this.tail = n;
-        }
-        else {
-            Node<T> aux;
-            for(aux=this.head; aux.getNext()!=null; aux=aux.getNext()) {
-
-            }
-            aux.setNext(n);
+            n.setPrev(null);
+            n.setNext(null);
+        } else {
+            this.tail.setNext(n);
+            n.setPrev(this.tail);
+            n.setNext(null);
             this.tail = n;
         }
 
@@ -43,25 +48,30 @@ public class LinkedList<T> implements List<T> {
     }
 
     public void addLast(T temp) {
-        Node<T> aux = new Node(temp);
+        Node<T> aux = new Node<>(temp);
         this.addLast(aux);
     }
 
 
     public void removeFirst() {
-        if (this.head == null) {
-            throw new MyException("List is empty");
-        }
-        else {
-            Node<T> aux = this.head.getNext();
-            this.head.setNext(null);
-            this.head = aux;
-            --this.size;
-            if (this.size == 1) {
-                this.tail = aux;
+            if (this.head == null) {
+                throw new MyException("List is empty");
             }
+
+            if (this.size == 1) {
+                this.head = null;
+                this.tail = null;
+            } else {
+                Node<T> newHead = this.head.getNext();
+                this.head.setNext(null);
+                this.head.setPrev(null); // Por si acaso
+                this.head = newHead;
+                this.head.setPrev(null);
+            }
+
+            --this.size;
         }
-    }
+
 
 
     public void removeLast() {
@@ -74,12 +84,11 @@ public class LinkedList<T> implements List<T> {
 
         }
         else {
-            Node<T> aux = this.head;
-            for (Node<T> aux2=aux.getNext();aux2.getNext() !=null; aux2 = aux2.getNext()) {
-                aux=aux2;
-            }
-            aux.setNext(null);
-            this.tail = aux;
+            Node<T> newTail = this.tail.getPrev();
+            this.tail.setNext(null);
+            this.tail.setPrev(null);
+            newTail.setNext(null);
+            this.tail = newTail;
         }
 
         this.size--;
@@ -90,38 +99,41 @@ public class LinkedList<T> implements List<T> {
         if (this.head == null) {
             throw new MyException("List is empty");
         }
-        else {
-            if (Objects.equals(this.head.data, o)){
-                this.removeFirst();
-                return;
-            }
-            if(Objects.equals(this.tail.data, o)){
-                this.removeLast();
-                return;
-            }
-            else {
-                Node<T> prev = this.head;
-                Node<T> curr = this.head.getNext();
 
-                while (curr != null && !curr.data.equals(o)) {
-                    prev = curr;
-                    curr = curr.getNext();
-                }
-
-
-                if (curr==null){
-                    throw new MyException("Element not found");
-                }
-                else {
-                    prev.setNext(curr.getNext());
-                    curr.setNext(null);
-                    --this.size;
-                }
-
-            }
+        if (Objects.equals(this.head.data, o)) {
+            this.removeFirst();
+            return;
         }
 
+        if (Objects.equals(this.tail.data, o)) {
+            this.removeLast();
+            return;
+        }
+
+        Node<T> curr = this.head.getNext();
+
+        while (curr != null && !Objects.equals(curr.data, o)) {
+            curr = curr.getNext();
+        }
+
+        if (curr == null) {
+            throw new MyException("Element not found");
+        }
+
+        // reconectar los nodos anterior y siguiente
+        Node<T> prev = curr.getPrev();
+        Node<T> next = curr.getNext();
+
+        prev.setNext(next);
+        if (next != null) {
+            next.setPrev(prev);
+        }
+
+        curr.setNext(null);
+        curr.setPrev(null);
+        --this.size;
     }
+
 
 
     @Override
