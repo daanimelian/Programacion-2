@@ -1,7 +1,10 @@
 package clase2.src;
 
+import java.util.Objects;
+
 public class LinkedList implements List {
     protected Node head = null;
+    protected Node tail = null;
     protected int size = 0;
     protected Node current;
 
@@ -10,6 +13,9 @@ public class LinkedList implements List {
     private void addFirst(Node n) {
         n.setNext(this.head);
         this.head = n;
+        if (this.size == 0) {
+            this.tail = n;
+        }
         ++this.size;
     }
 
@@ -22,6 +28,7 @@ public class LinkedList implements List {
     private void addLast(Node n) {
         if (this.head == null) {
             this.head = n;
+            this.tail = n;
         }
         else {
             Node aux;
@@ -29,6 +36,7 @@ public class LinkedList implements List {
 
             }
             aux.setNext(n);
+            this.tail = n;
         }
 
     ++this.size;
@@ -49,6 +57,9 @@ public class LinkedList implements List {
             this.head.setNext((Node)null);
             this.head = aux;
             --this.size;
+            if (this.size == 1) {
+                this.tail = aux;
+            }
         }
     }
 
@@ -59,6 +70,7 @@ public class LinkedList implements List {
         }
         else if (this.size == 1) {
             this.head = null;
+            this.tail = null;
 
         }
         else {
@@ -67,32 +79,42 @@ public class LinkedList implements List {
                 aux=aux2;
             }
             aux.setNext((Node)null);
+            this.tail = aux;
         }
 
         this.size--;
     }
 
 
-    public void removeNode(Node n) {
+    public void removeElement(Float o) {
         if (this.head == null) {
             throw new MyException("List is empty");
         }
         else {
-            if (this.head==n){
+            if (Objects.equals(this.head.data, o)){
                 this.removeFirst();
+                return;
+            }
+            if(Objects.equals(this.tail.data, o)){
+                this.removeLast();
+                return;
             }
             else {
-                Node aux;
-                for (aux=this.head; aux.getNext() != null && aux.getNext() != n; aux=aux.getNext()) {
+                Node prev = this.head;
+                Node curr = this.head.getNext();
 
+                while (curr != null && !curr.data.equals(o)) {
+                    prev = curr;
+                    curr = curr.getNext();
                 }
 
-                if (aux==null){
+
+                if (curr==null){
                     throw new MyException("Element not found");
                 }
                 else {
-                    aux.setNext(n.getNext());
-                    n.setNext((Node)null);
+                    prev.setNext(curr.getNext());
+                    curr.setNext((Node)null);
                     --this.size;
                 }
 
@@ -101,11 +123,6 @@ public class LinkedList implements List {
 
     }
 
-    @Override
-    public void removeElement(Float o) {
-        Node n = new Node(o);
-        this.removeNode(n);
-    }
 
     @Override
     public Float getFirst() {
@@ -116,13 +133,13 @@ public class LinkedList implements List {
         return this.head;
     }
 
+    public Node getTail() {
+        return this.tail;
+    }
+
     @Override
     public Float getLast() {
-        Node aux;
-        for (aux=this.head; aux.getNext() !=null; aux=aux.getNext()) {
-
-        }
-        return aux.getNext().data;
+        return this.getTail().data;
     }
 
     @Override

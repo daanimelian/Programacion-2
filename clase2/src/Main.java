@@ -111,7 +111,10 @@ public class Main {
         System.out.println("Mayor temperatura tras reemplazo: " + est.mayorTempMin());
 
         // 7. Intercambiar posiciones
-        System.out.println("Intercambiar pos 0 y 3, resultado mensaje: '" + est.intercambiar(0, 3) + "'");
+        est.imprimir();
+        est.intercambiar(0,3);
+        System.out.println("Intercambiar pos 0 y 3, resultado mensaje: '");
+        est.imprimir();
         System.out.println("¿Orden creciente tras intercambio?: " + est.ordenadoCreciente());
 
         // 8. Invertir in situ

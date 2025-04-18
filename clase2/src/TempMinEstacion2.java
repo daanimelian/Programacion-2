@@ -1,5 +1,4 @@
 package clase2.src;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /*Defina una clase TempMinEstacion que encapsule la representación de las temperaturas
@@ -27,7 +26,7 @@ public class TempMinEstacion2 {
     // Retorna la mayor temperatura registrada
     public Float mayorTempMin() {
         if (S.getHead() == null) {
-            throw new NoSuchElementException("No hay temperaturas registradas");
+            throw new MyException("No hay temperaturas registradas");
         }
         Float tempMax = (Float) S.getHead().data;
         for (Node aux = S.getHead().getNext(); aux != null; aux = aux.getNext()) {
@@ -42,7 +41,7 @@ public class TempMinEstacion2 {
     // Calcula el promedio de las temperaturas mínimas
     public Float promedioTempMin() {
         if (S.getHead() == null) {
-            throw new NoSuchElementException("No hay temperaturas registradas");
+            throw new MyException("No hay temperaturas registradas");
         }
         float suma = 0f;
         int count = 0;
@@ -188,10 +187,10 @@ Binaria (implementar este último)*/
      * Intercambia los valores en las posiciones pos1 y pos2.
      * Devuelve mensaje de error si alguna posición es inválida.
      */
-    public String intercambiar(int pos1, int pos2) {
+    public void intercambiar(int pos1, int pos2) {
         int size = S.getSize();
         if (pos1 < 0 || pos1 >= size || pos2 < 0 || pos2 >= size) {
-            return "Las posiciones de intercambio no son válidas.";
+            throw new MyException( "Las posiciones de intercambio no son válidas.");
         }
         Node n1 = S.getHead();
         for (int i = 0; i < pos1; i++) {
@@ -204,7 +203,6 @@ Binaria (implementar este último)*/
         Float temp = (Float) n1.data;
         n1.data = n2.data;
         n2.data = temp;
-        return "";
     }
 
     /**
@@ -214,23 +212,18 @@ Binaria (implementar este último)*/
         int size = S.getSize();
         if (size < 2) return;
 
-        Node left = S.getHead();
         for (int i = 0; i < size / 2; i++) {
-            // Encontrar el nodo correspondiente al final
-            Node right = S.getHead();
-            for (int j = 0; j < size - 1 - i; j++) {
-                right = right.getNext();
-            }
-            // Intercambiar datos
+            Node left = S.getNodeByIndex(i);
+            Node right = S.getNodeByIndex(size - 1 - i);
+
             Float temp = (Float) left.data;
             left.data = right.data;
             right.data = temp;
-            left = left.getNext();
         }
     }
 
     /**
-     * Ordena la lista enlazada en orden creciente usando bubble sort (intercambio de datos).
+     * Ordena la lista enlazada en orden creciente usando bubble sort.
      */
     public void ordenar() {
         if (S.getHead() == null || S.getHead().getNext() == null) return;
@@ -257,6 +250,10 @@ Binaria (implementar este último)*/
         return aux.data;
     }
 
-
+    public void imprimir() {
+        for (Node aux = S.getHead(); aux != null; aux = aux.getNext()) {
+            System.out.println(aux.data);
+        }
+    }
 
 }
