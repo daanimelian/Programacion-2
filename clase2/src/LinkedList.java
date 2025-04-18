@@ -2,15 +2,15 @@ package clase2.src;
 
 import java.util.Objects;
 
-public class LinkedList implements List {
-    protected Node head = null;
-    protected Node tail = null;
+public class LinkedList<T> implements List<T> {
+    protected Node<T> head = null;
+    protected Node<T> tail = null;
     protected int size = 0;
-    protected Node current;
+    protected Node<T> current;
 
     public LinkedList() {}
 
-    private void addFirst(Node n) {
+    private void addFirst(Node<T> n) {
         n.setNext(this.head);
         this.head = n;
         if (this.size == 0) {
@@ -19,19 +19,19 @@ public class LinkedList implements List {
         ++this.size;
     }
 
-    public void addFirst(Float temp) {
-        Node aux = new Node(temp);
+    public void addFirst(T temp) {
+        Node<T> aux = new Node(temp);
         this.addFirst(aux);
     }
 
 
-    private void addLast(Node n) {
+    private void addLast(Node<T> n) {
         if (this.head == null) {
             this.head = n;
             this.tail = n;
         }
         else {
-            Node aux;
+            Node<T> aux;
             for(aux=this.head; aux.getNext()!=null; aux=aux.getNext()) {
 
             }
@@ -42,8 +42,8 @@ public class LinkedList implements List {
     ++this.size;
     }
 
-    public void addLast(Float temp) {
-        Node aux = new Node(temp);
+    public void addLast(T temp) {
+        Node<T> aux = new Node(temp);
         this.addLast(aux);
     }
 
@@ -53,8 +53,8 @@ public class LinkedList implements List {
             throw new MyException("List is empty");
         }
         else {
-            Node aux = this.head.getNext();
-            this.head.setNext((Node)null);
+            Node<T> aux = this.head.getNext();
+            this.head.setNext(null);
             this.head = aux;
             --this.size;
             if (this.size == 1) {
@@ -74,11 +74,11 @@ public class LinkedList implements List {
 
         }
         else {
-            Node aux = this.head;
-            for (Node aux2=aux.getNext();aux2.getNext() !=null; aux2 = aux2.getNext()) {
+            Node<T> aux = this.head;
+            for (Node<T> aux2=aux.getNext();aux2.getNext() !=null; aux2 = aux2.getNext()) {
                 aux=aux2;
             }
-            aux.setNext((Node)null);
+            aux.setNext(null);
             this.tail = aux;
         }
 
@@ -86,7 +86,7 @@ public class LinkedList implements List {
     }
 
 
-    public void removeElement(Float o) {
+    public void removeElement(T o) {
         if (this.head == null) {
             throw new MyException("List is empty");
         }
@@ -100,8 +100,8 @@ public class LinkedList implements List {
                 return;
             }
             else {
-                Node prev = this.head;
-                Node curr = this.head.getNext();
+                Node<T> prev = this.head;
+                Node<T> curr = this.head.getNext();
 
                 while (curr != null && !curr.data.equals(o)) {
                     prev = curr;
@@ -114,7 +114,7 @@ public class LinkedList implements List {
                 }
                 else {
                     prev.setNext(curr.getNext());
-                    curr.setNext((Node)null);
+                    curr.setNext(null);
                     --this.size;
                 }
 
@@ -125,25 +125,25 @@ public class LinkedList implements List {
 
 
     @Override
-    public Float getFirst() {
+    public T getFirst() {
        return this.getHead().data;
     }
 
-    public Node getHead() {
+    public Node<T> getHead() {
         return this.head;
     }
 
-    public Node getTail() {
+    public Node<T> getTail() {
         return this.tail;
     }
 
     @Override
-    public Float getLast() {
+    public T getLast() {
         return this.getTail().data;
     }
 
     @Override
-    public Float getCurrent() {
+    public T getCurrent() {
         return this.current.data;
     }
 
@@ -152,7 +152,7 @@ public class LinkedList implements List {
         return this.size;
     }
 
-    public Node getNodeByIndex(int index) {
+    public Node<T> getNodeByIndex(int index) {
         if (this.head == null) {
             throw new MyException("List is empty");
         }
@@ -160,7 +160,7 @@ public class LinkedList implements List {
         if(this.getSize()<=index){
                 throw new MyException("Index out of bounds");
             }
-        Node aux = this.head;
+        Node<T> aux = this.head;
         for(int i=0; i < index;i++) {
             aux = aux.getNext();
 

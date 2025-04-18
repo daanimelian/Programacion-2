@@ -1,19 +1,19 @@
 package clase2.src;
 
-public class Node {
-    protected Node next;
-    protected Float data;
+public class Node<T> {
+    protected Node<T> next;
+    protected T data;
 
-    public Node(Node next, Float data) {
+    public Node(Node<T> next, T data) {
         this.next = next;
         this.data = data;
     }
 
-    public Node(Float data) {
+    public Node(T data) {
         this.data = data;
         this.next = null;
     }
 
-    public Node getNext() { return this.next; }
-    public void setNext(Node next) { this.next = next; }
+    public Node<T> getNext() { return this.next; }
+    public void setNext(Node<T> next) { this.next = next; }
 }
