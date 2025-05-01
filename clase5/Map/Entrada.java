@@ -1,4 +1,4 @@
-package clase5;
+package clase5.Map;
 
 public class Entrada<K,V> implements Entry<K,V> {
 	 private K clave;

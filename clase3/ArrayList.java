@@ -81,5 +81,9 @@ public class ArrayList <T> implements List <T>{
         lista=listaNueva;
     }
 
+    public T get(int index) {
+        return lista[index];
+    }
+
 
 }

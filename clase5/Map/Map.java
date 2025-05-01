@@ -1,4 +1,4 @@
-package clase5;
+package clase5.Map;
 
 public interface Map<K,V> { 
 	public int size(); 

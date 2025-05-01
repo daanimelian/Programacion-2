@@ -1,4 +1,4 @@
-package clase5;
+package clase5.Dictionary;
 
 public interface Entry <K,V> { 
 	public K getKey(); 

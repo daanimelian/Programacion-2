@@ -1,4 +1,4 @@
-package clase5;
+package clase5.Map;
 
 public class ArrayMap<K,V> implements Map<K,V> {
 	
@@ -33,7 +33,7 @@ public class ArrayMap<K,V> implements Map<K,V> {
 		int i=0;
 		boolean encontreClave=false;
 		while(!encontreClave && i<size) {
-			if(array[i].getKey()==k)
+			if(array[i].getKey().equals(k))
 				encontreClave=true;
 			else
 				i++;
@@ -58,7 +58,7 @@ public class ArrayMap<K,V> implements Map<K,V> {
 			if(size<array.length) {
 				array[size] = new Entrada(k,v);
 				size++;
-				return null;
+				return v;
 			}
 			else
 				throw new MyException("El arreglo está lleno");

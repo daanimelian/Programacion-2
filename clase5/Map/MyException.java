@@ -1,4 +1,4 @@
-package clase5;
+package clase5.Map;
 
 public class MyException extends RuntimeException{
 	/**
