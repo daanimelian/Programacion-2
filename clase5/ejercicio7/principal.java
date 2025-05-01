@@ -4,12 +4,12 @@ import clase3.ArrayList;
 import clase5.Map.ArrayMap;
 import clase5.Map.Entrada;
 import clase5.Map.Entry;
-import clase5.ejercicio7.metodos;
 import java.util.Objects;
+import static clase5.ejercicio7.metodos.unir;
 
 public class principal{
 public static void main(String[] args) {
-    /*ArrayMap<Integer,String> M1 = new ArrayMap<Integer,String>();
+    ArrayMap<Integer,String> M1 = new ArrayMap<Integer,String>();
     ArrayMap<Integer,String> M2 = new ArrayMap<Integer,String>();
     System.out.print("Ingrese un DNI: ");
     String key = System.console().readLine();
@@ -50,21 +50,9 @@ public static void main(String[] args) {
     Entry<Integer,String>[] entradas2 = M2.entries();
     for(int i = 0; i<entradas2.length;i++)
         System.out.print(" ( "+entradas2[i].getKey()+" , "+entradas2[i].getValue()+" ) |");
-    System.out.print("}");*/
+    System.out.print("}");
 
-    ArrayMap<Integer,String> M1p = new ArrayMap<Integer,String>();
-    ArrayMap<Integer,String> M2p = new ArrayMap<Integer,String>();
-
-    M1p.put(41003037, "5");
-    M2p.put(41003037, "4");
-    M1p.put(41003038, "5");
-    M2p.put(41003038, "4");
-    M1p.put(41003039, "5");
-    M2p.put(41003039, "4");
-    M1p.put(41003032, "5");
-    M2p.put(41003032, "5");
-
-    ArrayList<Entrada<Integer, String>> union = metodos.unir(M1p,M2p);
+    ArrayList<Entrada<Integer, String>> union = unir(M1,M2);
 
     for (int i = 0; i < union.getSize(); i++) {
         Entrada<Integer, String> entrada = union.get(i);
