@@ -3,7 +3,7 @@ package clase5.Map;
 public class Principal {
 
 	public static void main(String[] args) {
-		ArrayMap<Integer,String> diccionario = new ArrayMap<Integer,String>();
+		/*ArrayMap<Integer,String> diccionario = new ArrayMap<Integer,String>();
 		System.out.print("Ingrese una clave: ");
 		String key = System.console().readLine();
 		int keyN = Integer.parseInt(key);
@@ -41,6 +41,27 @@ public class Principal {
 			i++;
 		}
 		return sonIguales;
+	}*/
+
+		ArrayMap<Integer, String> diccionario = new ArrayMap<>();
+
+		diccionario.put(1, "cinco");
+		diccionario.put(2, "dos");
+		diccionario.put(5, "nueve");
+		diccionario.put(7, "uno");
+		diccionario.put(8, "cuatro");
+
+		ArrayMap<Integer, String> diccionario2 = new ArrayMap<>();
+
+		diccionario2.put(1, "cinco");
+		diccionario2.put(3, "dos");
+		diccionario2.put(5, "nueve");
+		diccionario2.put(7, "uno");
+		diccionario2.put(8, "cuatro");
+
+		boolean sonIguales = ArrayMap.sonIguales(diccionario, diccionario2);
+
+		System.out.println("\nSon iguales: " + sonIguales);
 	}
 
 }

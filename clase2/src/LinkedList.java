@@ -179,4 +179,54 @@ public class LinkedList<T> implements List<T> {
         }
         return aux;
     }
-}
+
+    /*Sobre la implementación de LinkedList, agregar métodos que le
+permitan al usuario “indexar” la lista:
+• elementAt(int pos): devuelve el elemento ubicado en la posición pos, considerando el
+primer elemento como la posición 0.
+• removeAt(int pos): elimina el elemento ubicado en la posición pos, considerando el
+primer elemento como la posición 0.*/
+
+    public Node<T> elementAt(int pos){
+        Node<T> aux = this.head;
+        for(int a=0;a < pos; a++ ){
+            aux = aux.getNext();
+        }
+        return aux;
+
+    }
+
+    public void removeElementAt(int pos){
+            if (pos < 0 || pos >= size) {
+                throw new IndexOutOfBoundsException("Posición fuera de rango: " + pos);
+            }
+
+            Node<T> aux = head;
+            for (int i = 0; i < pos; i++) {
+                aux = aux.getNext();
+            }
+
+            if (aux == head) {
+                head = aux.getNext();
+                if (head != null) {
+                    head.setPrev(null);
+                }
+            } else {
+                aux.getPrev().setNext(aux.getNext());
+            }
+
+            if (aux == tail) {
+                tail = aux.getPrev();
+                if (tail != null) {
+                    tail.setNext(null);
+                }
+            } else {
+                aux.getNext().setPrev(aux.getPrev());
+            }
+
+            aux.setNext(null);
+            aux.setPrev(null);
+            size--;
+        }
+
+    }
