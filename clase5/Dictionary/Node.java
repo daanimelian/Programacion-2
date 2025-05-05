@@ -1,11 +1,11 @@
 package clase5.Dictionary;
 
-public class Node<E> {
+public class Node<E, V> {
 	private E elem;
-	private Node<E> next;
-	private Node<E> previous;
+	private Node<E, V> next;
+	private Node<E, V> previous;
 	
-	public Node(E elem, Node<E> next, Node<E> previous) {
+	public Node(E elem, Node<E, V> next, Node<E, V> previous) {
 		this.elem = elem;
 		this.next = next;
 		this.previous = previous;
@@ -19,19 +19,19 @@ public class Node<E> {
 		this.elem = elem;
 	}
 
-	public Node<E> getNext() {
+	public Node<E, V> getNext() {
 		return next;
 	}
 
-	public void setNext(Node<E> next) {
+	public void setNext(Node<E, V> next) {
 		this.next = next;
 	}
 
-	public Node<E> getPrevious() {
+	public Node<E, V> getPrevious() {
 		return previous;
 	}
 
-	public void setPrevious(Node<E> previous) {
+	public void setPrevious(Node<E, V> previous) {
 		this.previous = previous;
 	}
 }
