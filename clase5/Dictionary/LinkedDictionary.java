@@ -6,8 +6,8 @@ import clase5.List.MyException;
 
 public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 	
-	protected Node<Entrada<K, List<V>>> head;
-	protected Node<Entrada<K, List<V>>> tail;
+	protected Node<Entrada<K, List<V>>, V> head;
+	protected Node<Entrada<K, List<V>>, V> tail;
 	protected int size;
 	
 	public LinkedDictionary() {
@@ -34,7 +34,7 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 		if (size == 0) {
 			return null;
 		}
-		Node<Entrada<K, List<V>>> actual = head;
+		Node<Entrada<K, List<V>>, V> actual = head;
 		while (actual != null && !actual.getElem().getKey().equals(k)) {
 			actual = actual.getNext();
 		}
@@ -60,7 +60,7 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 			List<V> listaValores = new LinkedList<V>();
 			listaValores.addFirst(v);
 			Entrada<K, List<V>> entrada = new Entrada<K, List<V>>(k, listaValores);
-			Node<Entrada<K, List<V>>> nuevoNodo = new Node<Entrada<K, List<V>>>(entrada, null, null);
+			Node<Entrada<K, List<V>>, V> nuevoNodo = new Node<Entrada<K, List<V>>, V>(entrada, null, null);
 			head = nuevoNodo;
 			tail = nuevoNodo;
 			size++;
@@ -69,7 +69,7 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 			head.getElem().getValue().addLast(v);
 		}
 		else {
-			Node<Entrada<K, List<V>>> actual = head;
+			Node<Entrada<K, List<V>>, V> actual = head;
 			while (actual != null && !actual.getElem().getKey().equals(k)) {
 				actual = actual.getNext();
 			}
@@ -80,7 +80,7 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 				List<V> listaValores = new LinkedList<V>();
 				listaValores.addFirst(v);
 				Entrada<K, List<V>> entrada = new Entrada<K, List<V>>(k, listaValores);
-				Node<Entrada<K, List<V>>> nuevoNodo = new Node<Entrada<K, List<V>>>(entrada, null, tail);
+				Node<Entrada<K, List<V>>, V> nuevoNodo = new Node<Entrada<K, List<V>>, V>(entrada, null, tail);
 				tail.setNext(nuevoNodo);	
 				tail = nuevoNodo;
 				size++;
@@ -107,7 +107,7 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 			size--;
 			return copiaValores;
 		}
-		Node<Entrada<K, List<V>>> actual = head;
+		Node<Entrada<K, List<V>>, V> actual = head;
 		while (actual != null && actual.getElem().getKey().equals(k)) {
 			actual = actual.getNext();
 		}
@@ -140,7 +140,7 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 		if (size == 0) {
 			return null;
 		}
-		Node<Entrada<K, List<V>>> actual = head;
+		Node<Entrada<K, List<V>>, V> actual = head;
 		while (actual != null && actual.getElem().getKey() != k) {
 			actual = actual.getNext();
 		}
@@ -173,7 +173,7 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 	public Iterable<K> keys() {
 		// TODO Auto-generated method stub
 		LinkedList<K> claves = new LinkedList<K>();
-		Node<Entrada<K, List<V>>> actual = head;
+		Node<Entrada<K, List<V>>, V> actual = head;
 		while (actual != null) {
 			claves.addLast(actual.getElem().getKey());
 			actual = actual.getNext();
@@ -185,7 +185,7 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 	public Iterable<Entrada<K, Iterable<V>>> entries() {
 		// TODO Auto-generated method stub
 		LinkedList<Entrada<K, Iterable<V>>> entradas = new LinkedList<Entrada<K, Iterable<V>>>();
-		Node<Entrada<K, List<V>>> actual = head;
+		Node<Entrada<K, List<V>>, V> actual = head;
 		while (actual != null) {
 			List<V> listaValores = actual.getElem().getValue();
 			LinkedList<V> copiaValores = new LinkedList<V>();
