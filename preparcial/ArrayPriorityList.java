@@ -1,5 +1,5 @@
 package preparcial;
-import clase2.src.MyException;
+import clase5.Dictionary.MyException;
 import clase4.src.Entrada;
 import clase3.Node;
 
