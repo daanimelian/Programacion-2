@@ -1,4 +1,4 @@
-package arbol.ABB;
+package arbol.ABBlibro;
 
 public class NodoABB {
 
