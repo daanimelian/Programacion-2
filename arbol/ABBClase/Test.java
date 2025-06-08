@@ -1,5 +1,7 @@
 package arbol.ABBClase;
 import java.util.Comparator;
+import arbol.ejercicios.practica8.ejercicio3;
+import clase3.ArrayList;
 
 public class Test {
 
@@ -26,7 +28,8 @@ public class Test {
 		insertar_imprimir( t, 64 );   //t.insertar(64): ((16)20(64))
 		insertar_imprimir( t, 6 );    //t.insertar(6): (((6)16)20(64))
 		insertar_imprimir( t, 100 );  //t.insertar(100): (((6)16)20(64(100))) 
-		insertar_imprimir( t, 3 );    //t.insertar(3): ((((3)6)16)20(64(100)))
+		insertar_imprimir( t, 3 );//t.insertar(3): ((((3)6)16)20(64(100)))}
+
 		
 	}
 	

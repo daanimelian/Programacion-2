@@ -13,6 +13,10 @@ public class ABBImple<E extends Comparable<E>> implements ABBTDA<E> {
         this.comp = comp;
     }
 
+    public NodoABB<E> getRaiz() {
+        return raiz;
+    }
+
     //PARA BUSCAR UN ELEMENTO
     public boolean pertenece( E elemento ) {
         return buscar(elemento).getElemento() != null;

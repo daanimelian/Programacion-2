@@ -18,19 +18,16 @@ public class LinkedDictionary<K, V> implements Dictionary<K, V> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return size == 0;
 	}
 
 	@Override
 	public Iterable<V> get(K k) {
-		// TODO Auto-generated method stub
 		if (size == 0) {
 			return null;
 		}
