@@ -119,6 +119,48 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 		return aux.getPeso();
 	}
 
-	
+	public E[] puentesEntre(E v1, E v2) {
+		NodoVertice<E> nodoV1 = vert2Nodo(v1);
+		if (nodoV1 == null) return (E[]) new Object[0]; // v1 no existe
+
+		// Asumo que como máximo puede haber 'vertices' puentes
+		E[] salida = (E[]) new Object[vertices];
+		int i = 0;
+
+		NodoArista<E> aristaDesdeV1 = nodoV1.getAristas();
+		while (aristaDesdeV1 != null) {
+			NodoVertice<E> posiblePuente = aristaDesdeV1.getVerticeDestino();
+			NodoArista<E> aristaDesdeP = posiblePuente.getAristas();
+			boolean esPuente = false;
+
+			while (aristaDesdeP != null) {
+				if (aristaDesdeP.getVerticeDestino().getVertice().equals(v2)) {
+					esPuente = true; // si se confirma como puente
+				}
+				aristaDesdeP = aristaDesdeP.getSigArista();
+			}
+
+			if (esPuente) {
+				salida[i] = posiblePuente.getVertice();
+				i++;
+			}
+
+			aristaDesdeV1 = aristaDesdeV1.getSigArista();
+		}
+
+		// Redimensionar el arreglo si hay menos de 'vertices' encontrados
+		E[] resultadoFinal = (E[]) new Object[i];
+		for (int j = 0; j < i; j++) {
+			resultadoFinal[j] = salida[j];
+		}
+
+		return resultadoFinal;
+	}
+
+
+
+
+
+
 
 }
