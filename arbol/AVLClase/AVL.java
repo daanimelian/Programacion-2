@@ -134,7 +134,15 @@ public class AVL<E extends Comparable<E>> implements AVLTDA<E> {
         while (current.left != null) current = current.left;
         return current;
     }
-    
+
+    public E min() {
+        if (root == null) {
+            return null; // o lanzar una excepción si preferís
+        }
+        return minValueNode(root).data;
+    }
+
+
     public String toString() {
     	String salida=inOrderTraversalString(root);
     	return salida.substring(0,salida.length()-2);
@@ -144,5 +152,8 @@ public class AVL<E extends Comparable<E>> implements AVLTDA<E> {
             return "( "+inOrderTraversalString(node.left)+node.data + " "+inOrderTraversalString(node.right) + " )";
         }
         else return "";
+    }
+    public NodoAVL<E> getRoot(){
+        return root;
     }
 }

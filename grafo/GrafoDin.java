@@ -62,6 +62,21 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 		}
 		return salida;
 	}
+
+	public E[] verticesAislados(){
+		E[] salida = (E[])new Object[vertices];
+		NodoVertice<E> aux = origen;
+		int i = 0;
+		while (aux != null) {
+			if (aux.getAristas() == null) {
+				salida[i] = aux.getVertice();
+				i++;
+				aux = aux.getSigVertice();
+			}
+
+		}
+		return salida;
+	}
 	
 	public void agregarArista(E v1, E v2, int peso ) {
 		NodoVertice<E> n1 = vert2Nodo(v1); //Buscamos el nodo origen...
@@ -103,6 +118,7 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 			aux = aux.getSigArista(); //Buscamos la arista
 		return aux.getPeso();
 	}
+
 	
 
 }
