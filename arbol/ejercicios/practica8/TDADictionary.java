@@ -1,5 +1,7 @@
 package arbol.ejercicios.practica8;
 import arbol.ABBClase.ABBImple;
+import arbol.ABBClase.ABBTDA;
+import arbol.ABBClase.DefaultComparator;
 import clase3.ArrayList;
 import clase5.Dictionary.Dictionary;
 import clase5.Dictionary.Entrada;
@@ -8,10 +10,8 @@ import clase5.List.LinkedList;
 import clase5.List.MyException;
 
 public class TDADictionary<K, V extends Comparable<V>> implements Dictionary<K, V> {
-
-    ejercicio3 ejercicio3 = new ejercicio3();
-    protected Node<Entrada<K, ABBImple<V>>, V> head;
-    protected Node<Entrada<K, ABBImple<V>>, V> tail;
+    protected Node<Entrada<K, ABBTDA<V>>, V> head;
+    protected Node<Entrada<K, ABBTDA<V>>, V> tail;
     protected int size;
 
     public TDADictionary() {
@@ -32,51 +32,48 @@ public class TDADictionary<K, V extends Comparable<V>> implements Dictionary<K, 
 
     @Override
     public Iterable<V> get(K k) {
-        if (size == 0) {
-            return null;
-        }
-        Node<Entrada<K, ABBImple<V>>, V> actual = head;
+        Node<Entrada<K, ABBTDA<V>>, V> actual = head;
         while (actual != null && !actual.getElem().getKey().equals(k)) {
             actual = actual.getNext();
         }
         if (actual != null) {
-            ABBImple<V> listaValores = actual.getElem().getValue();
-            ArrayList<V> copiaValores = ejercicio3.elementosInOrder(listaValores.getRaiz());
-            return (Iterable<V>) copiaValores;
+            ABBTDA<V> abb = actual.getElem().getValue();
+            ejercicio3<V> recorrido = new ejercicio3<>();
+            ArrayList<V> temp = recorrido.elementosInOrder(((ABBImple<V>) abb).getRaiz());
+            LinkedList<V> resultado = new LinkedList<>();
+            for (int i = 0; i < temp.getSize(); i++) {
+                resultado.addLast(temp.get(i));
+            }
+            return resultado;
+
         }
-        else {
-            return null;
-        }
+        return null;
     }
+
+
 
     @Override
     public void put(K k, V v) {
-        // TODO Auto-generated method stub
         if (size == 0) {
-            List<V> listaValores = new LinkedList<V>();
-            listaValores.addFirst(v);
-            Entrada<K, List<V>> entrada = new Entrada<K, List<V>>(k, listaValores);
-            Node<Entrada<K, List<V>>, V> nuevoNodo = new Node<Entrada<K, List<V>>, V>(entrada, null, null);
+            ABBTDA<V> abbValores = new ABBImple<>(new DefaultComparator<V>());
+            abbValores.insertar(v);
+            Entrada<K, ABBTDA<V>> entrada = new Entrada<>(k, abbValores);
+            Node<Entrada<K, ABBTDA<V>>, V> nuevoNodo = new Node<>(entrada, null, null);
             head = nuevoNodo;
             tail = nuevoNodo;
             size++;
-        }
-        else if (head.getElem().getKey().equals( k)) {
-            head.getElem().getValue().addLast(v);
-        }
-        else {
-            Node<Entrada<K, List<V>>, V> actual = head;
+        } else {
+            Node<Entrada<K, ABBTDA<V>>, V> actual = head;
             while (actual != null && !actual.getElem().getKey().equals(k)) {
                 actual = actual.getNext();
             }
             if (actual != null) {
-                actual.getElem().getValue().addLast(v);
-            }
-            else {
-                List<V> listaValores = new LinkedList<V>();
-                listaValores.addFirst(v);
-                Entrada<K, List<V>> entrada = new Entrada<K, List<V>>(k, listaValores);
-                Node<Entrada<K, List<V>>, V> nuevoNodo = new Node<Entrada<K, List<V>>, V>(entrada, null, tail);
+                actual.getElem().getValue().insertar(v);
+            } else {
+                ABBTDA<V> abbValores = new ABBImple<>(new DefaultComparator<V>());
+                abbValores.insertar(v);
+                Entrada<K, ABBTDA<V>> entrada = new Entrada<>(k, abbValores);
+                Node<Entrada<K, ABBTDA<V>>, V> nuevoNodo = new Node<>(entrada, null, tail);
                 tail.setNext(nuevoNodo);
                 tail = nuevoNodo;
                 size++;
@@ -84,92 +81,90 @@ public class TDADictionary<K, V extends Comparable<V>> implements Dictionary<K, 
         }
     }
 
+
+
     @Override
     public Iterable<V> remove(K k) {
-        // TODO Auto-generated method stub
-        if (size == 0) {
-            return null;
-        }
-        if (head.getElem().getKey().equals( k)) {
-            List<V> listaValores = head.getElem().getValue();
-            LinkedList<V> copiaValores = new LinkedList<V>();
-            listaValores.First();
-            while (!listaValores.atEnd()) {
-                copiaValores.addLast(listaValores.getCurrent());
-                listaValores.advance();
-            }
-            head.getNext().setPrevious(null);
-            head = head.getNext();
-            size--;
-            return copiaValores;
-        }
-        Node<Entrada<K, List<V>>, V> actual = head;
-        while (actual != null && actual.getElem().getKey().equals(k)) {
+        Node<Entrada<K, ABBTDA<V>>, V> actual = head;
+        while (actual != null && !actual.getElem().getKey().equals(k)) {
             actual = actual.getNext();
         }
+
         if (actual != null) {
-            List<V> listaValores = actual.getElem().getValue();
-            LinkedList<V> copiaValores = new LinkedList<V>();
-            listaValores.First();
-            while (!listaValores.atEnd()) {
-                copiaValores.addLast(listaValores.getCurrent());
-                listaValores.advance();
+            ABBTDA<V> abb = actual.getElem().getValue();
+            ejercicio3<V> recorrido = new ejercicio3<>();
+            ArrayList<V> copia = recorrido.elementosInOrder(((ABBImple<V>) abb).getRaiz());
+
+            // eliminar nodo como antes
+            if (actual == head) {
+                head = head.getNext();
+                if (head != null) head.setPrevious(null);
+            } else {
+                actual.getPrevious().setNext(actual.getNext());
+                if (actual.getNext() != null) {
+                    actual.getNext().setPrevious(actual.getPrevious());
+                } else {
+                    tail = actual.getPrevious();
+                }
             }
-            actual.getPrevious().setNext(actual.getNext());
-            if (actual.getNext() != null) {
-                actual.getNext().setPrevious(actual.getPrevious());
-            }
-            else {
-                tail = actual.getPrevious();
-            }
+
             size--;
-            return copiaValores;
+            LinkedList<V> resultado = new LinkedList<>();
+            for (int i = 0; i < copia.getSize(); i++) {
+                resultado.addLast(copia.get(i));
+            }
+            return resultado;
         }
-        else {
-            return null;
-        }
+
+        return null;
     }
+
 
     @Override
     public V remove(K k, V v) {
-        // TODO Auto-generated method stub
-        if (size == 0) {
-            return null;
-        }
-        Node<Entrada<K, List<V>>, V> actual = head;
-        while (actual != null && actual.getElem().getKey() != k) {
+        Node<Entrada<K, ABBTDA<V>>, V> actual = head;
+        while (actual != null && !actual.getElem().getKey().equals(k)) {
             actual = actual.getNext();
         }
+
         if (actual != null) {
-            List<V> listaValores = actual.getElem().getValue();
-            try {
-                listaValores.remove(v);
-                if (listaValores.getSize() == 0) {
-                    actual.getPrevious().setNext(actual.getNext());
-                    if (actual.getNext() != null) {
-                        actual.getNext().setPrevious(actual.getPrevious());
-                    }
-                    else {
-                        tail = actual.getPrevious();
+            ABBTDA<V> abb = actual.getElem().getValue();
+            V eliminado = abb.eliminar(v);
+
+            if (eliminado != null) {
+                ejercicio3<V> recorrido = new ejercicio3<>();
+                ArrayList<V> valoresRestantes = recorrido.elementosInOrder(((ABBImple<V>) abb).getRaiz());
+
+                if (valoresRestantes.getSize() == 0) {
+                    // eliminar toda la entrada
+                    if (actual == head) {
+                        head = head.getNext();
+                        if (head != null) head.setPrevious(null);
+                    } else {
+                        actual.getPrevious().setNext(actual.getNext());
+                        if (actual.getNext() != null) {
+                            actual.getNext().setPrevious(actual.getPrevious());
+                        } else {
+                            tail = actual.getPrevious();
+                        }
                     }
                     size--;
                 }
-                return v;
-            }
-            catch (MyException e) {
-                return null;
+
+                return eliminado;
             }
         }
-        else {
-            return null;
-        }
+
+        return null;
     }
+
+
+
 
     @Override
     public Iterable<K> keys() {
-        // TODO Auto-generated method stub
-        LinkedList<K> claves = new LinkedList<K>();
-        Node<Entrada<K, List<V>>, V> actual = head;
+        LinkedList<K> claves = new LinkedList<>();
+        Node<Entrada<K, ABBTDA<V>>, V> actual = head;
         while (actual != null) {
             claves.addLast(actual.getElem().getKey());
             actual = actual.getNext();
@@ -177,22 +172,31 @@ public class TDADictionary<K, V extends Comparable<V>> implements Dictionary<K, 
         return claves;
     }
 
+
     @Override
     public Iterable<Entrada<K, Iterable<V>>> entries() {
-        // TODO Auto-generated method stub
-        LinkedList<Entrada<K, Iterable<V>>> entradas = new LinkedList<Entrada<K, Iterable<V>>>();
-        Node<Entrada<K, List<V>>, V> actual = head;
+        LinkedList<Entrada<K, Iterable<V>>> entradas = new LinkedList<>();
+        Node<Entrada<K, ABBTDA<V>>, V> actual = head;
+
         while (actual != null) {
-            List<V> listaValores = actual.getElem().getValue();
-            LinkedList<V> copiaValores = new LinkedList<V>();
-            listaValores.First();
-            while (!listaValores.atEnd()) {
-                copiaValores.addLast(listaValores.getCurrent());
-                listaValores.advance();
+            K clave = actual.getElem().getKey();
+            ABBTDA<V> abb = actual.getElem().getValue();
+
+            ejercicio3<V> recorrido = new ejercicio3<>();
+            ArrayList<V> arrayValores = recorrido.elementosInOrder(((ABBImple<V>) abb).getRaiz());
+
+            // Convertir manualmente a LinkedList
+            LinkedList<V> copiaValores = new LinkedList<>();
+            for (int i = 0; i < arrayValores.getSize(); i++) {
+                copiaValores.addLast(arrayValores.get(i));
             }
-            entradas.addLast(new Entrada<K, Iterable<V>>(actual.getElem().getKey(), copiaValores));
+
+            entradas.addLast(new Entrada<>(clave, copiaValores));
             actual = actual.getNext();
         }
+
         return entradas;
     }
+
+
 }
