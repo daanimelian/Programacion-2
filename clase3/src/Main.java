@@ -1,6 +1,5 @@
-package clase3;
+package clase3.src;
 import java.util.Scanner;
-import clase3.metodos;
 
 public class Main {
     public static void main(String[] args) {

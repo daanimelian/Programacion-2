@@ -1,5 +1,5 @@
 package clase5.Map;
-import clase3.Node;
+import clase3.src.Node;
 
 
 public class LinkedMap<K extends Comparable<K>, V> implements Map<K, V> {

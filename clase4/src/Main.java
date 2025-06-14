@@ -1,6 +1,5 @@
 package clase4.src;
-import clase2.src.MyException;
-import clase3.LinkedStack;
+import clase3.src.LinkedStack;
 
 import static clase4.src.metodos.unirPilas;
 

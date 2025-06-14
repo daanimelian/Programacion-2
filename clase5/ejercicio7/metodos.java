@@ -1,6 +1,6 @@
 package clase5.ejercicio7;
 
-import clase3.ArrayList;
+import clase3.src.ArrayList;
 import clase5.Map.Entrada;
 import clase5.Map.ArrayMap;
 

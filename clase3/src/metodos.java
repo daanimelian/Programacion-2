@@ -1,4 +1,5 @@
-package clase3;
+package clase3.src;
+
 public class metodos {
 
 

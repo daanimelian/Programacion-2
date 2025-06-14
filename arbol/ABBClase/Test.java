@@ -1,7 +1,5 @@
 package arbol.ABBClase;
 import java.util.Comparator;
-import arbol.ejercicios.practica8.ejercicio3;
-import clase3.ArrayList;
 
 public class Test {
 

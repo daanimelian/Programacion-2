@@ -1,6 +1,5 @@
 package preparcial;
 
-import clase3.LinkedList;
 import clase5.Dictionary.LinkedDictionary;
 
 public class MetodosAlumnos {

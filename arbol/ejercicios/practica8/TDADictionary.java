@@ -2,12 +2,11 @@ package arbol.ejercicios.practica8;
 import arbol.ABBClase.ABBImple;
 import arbol.ABBClase.ABBTDA;
 import arbol.ABBClase.DefaultComparator;
-import clase3.ArrayList;
+import clase3.src.ArrayList;
 import clase5.Dictionary.Dictionary;
 import clase5.Dictionary.Entrada;
 import clase5.Dictionary.Node;
 import clase5.List.LinkedList;
-import clase5.List.MyException;
 
 public class TDADictionary<K, V extends Comparable<V>> implements Dictionary<K, V> {
     protected Node<Entrada<K, ABBTDA<V>>, V> head;

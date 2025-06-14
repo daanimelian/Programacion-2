@@ -1,6 +1,7 @@
-package clase3;
+package clase3.src;
 import clase2.src.MyException;
-public class ArrayList <T> implements List <T>{
+
+public class ArrayList <T> implements List<T> {
 
     private T [] lista;
     private int size;

@@ -1,6 +1,5 @@
-package clase3;
+package clase3.src;
 import clase2.src.MyException;
-import clase2.src.Node;
 
 public class ArrayStack<T> implements Stack<T> {
     private T[] pila;

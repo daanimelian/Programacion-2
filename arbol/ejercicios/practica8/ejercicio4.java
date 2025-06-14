@@ -1,7 +1,7 @@
 package arbol.ejercicios.practica8;
 
 import arbol.ABBClase.NodoABB;
-import clase3.ArrayList;
+import clase3.src.ArrayList;
 
 public class ejercicio4<E extends Comparable<E>> {
 

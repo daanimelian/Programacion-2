@@ -1,5 +1,4 @@
-package clase3;
-import clase2.src.LinkedList;
+package clase3.src;
 import clase2.src.MyException;
 
 public class LinkedStack<T> implements Stack<T> {

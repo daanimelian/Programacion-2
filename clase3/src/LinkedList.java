@@ -1,8 +1,8 @@
-package clase3;
+package clase3.src;
 
 import clase2.src.MyException;
 
-public class LinkedList<T> implements List<T>{
+public class LinkedList<T> implements List<T> {
     protected Node<T> head = null;
     protected Node<T> tail = null;
     protected int size = 0;

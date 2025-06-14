@@ -1,7 +1,6 @@
 package clase5.ejercicio8;
-import clase3.ArrayList;
+import clase3.src.ArrayList;
 import clase5.Map.ArrayMap;
-import clase3.ArrayList;
 import clase5.Dictionary.LinkedDictionary;
 
 import static clase5.ejercicio8.metodos.unir;

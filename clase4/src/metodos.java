@@ -1,7 +1,5 @@
 package clase4.src;
-import clase3.ArrayStack;
-import clase3.Stack;
-import clase3.LinkedStack;
+import clase3.src.LinkedStack;
 public class metodos {
 
 //    Implemente un método que reciba dos pilas de colas de enteros P1 y P2, y retorne

@@ -1,5 +1,5 @@
 package preparcial;
-import clase3.LinkedStack;
+import clase3.src.LinkedStack;
 import clase4.src.LinkedQueue;
 import clase5.Dictionary.LinkedDictionary;
 import clase5.List.LinkedList;

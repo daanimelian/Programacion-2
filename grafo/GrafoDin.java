@@ -1,4 +1,5 @@
 package grafo;
+import clase3.src.LinkedStack;
 
 public class GrafoDin<E> implements GrafoTDA<E> {
 	private NodoVertice<E> origen;
@@ -158,8 +159,57 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 	}
 
 
+	public void algoritmoDFS(E origenDFS) {
+		//Pila de nodos vertice por visitar
+		LinkedStack<NodoVertice<E>> stack = new LinkedStack<>();
 
+		//Pila de vertices visitados
+		E[] visitados = (E[]) new Object[vertices];
 
+		//Cantidad de vertices visitados
+		int count = 0;
+
+		//Agarro el nodo del vertice
+		NodoVertice<E> nodoOrigen = vert2Nodo(origenDFS);
+
+		//Si es null, termina la ejecucion
+		if (nodoOrigen == null) return;
+
+		//Lo agrego a la pila de nodos por visitar
+		stack.push(nodoOrigen);
+
+		// Si la pila tiene elementos entro al while
+		while (!stack.isEmpty()) {
+			// saco el nodo
+			NodoVertice<E> actual = stack.pop();
+			//Si el nodo no fue visitado
+			if (!estaEnArreglo(actual.getVertice(), visitados, count)) {
+				//Lo imprimo por pantalla, lo agrego al arreglo de visitados y sumo el contador
+				System.out.println(actual.getVertice());
+				visitados[count] = actual.getVertice();
+				count++;
+
+				// Agregamos  todos los nodos "vecinos" al stack y vuelvo a arrancar el while
+				NodoArista<E> arista = actual.getAristas();
+				while (arista != null) {
+					stack.push(arista.getVerticeDestino());
+					arista = arista.getSigArista();
+				}
+			}
+		}
+	}
+
+	private boolean estaEnArreglo(E vertice, E[] arreglo, int count) {
+		// recorre el arreglo para saber si el vertice esta
+		boolean esta=false;
+		for (int i = 0; i < count; i++) {
+			if (arreglo[i].equals(vertice)) {
+				esta = true;
+				i=count;
+			}
+		}
+		return esta;
+	}
 
 
 

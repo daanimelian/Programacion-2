@@ -1,7 +1,6 @@
 package preparcial;
 import clase5.Dictionary.MyException;
 import clase4.src.Entrada;
-import clase3.Node;
 
 public class ArrayPriorityList<K extends Comparable<K>, V> implements PriorityList<K,V>{
 
