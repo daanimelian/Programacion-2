@@ -1,5 +1,6 @@
 package arbol.ABBClase;
-
+import clase3.src.ArrayList;
+import clase5.Map.*;
 import java.util.Comparator;
 public class ABBImple<E extends Comparable<E>> implements ABBTDA<E> {
     protected NodoABB<E> raiz;
@@ -176,6 +177,78 @@ public class ABBImple<E extends Comparable<E>> implements ABBTDA<E> {
             return "(" + postorder(nodov.getIzq()) + postorder(nodov.getDer()) + nodov.getElemento() + ")";
         }
         else return "";
+    }
+
+    private void toMapLogica(NodoABB<E> nodov, Map<E,Integer> dictSimp){
+
+        if (nodov != null && nodov.getElemento() != null){
+            int cantHijos=0;
+
+            if(nodov.getIzq().getElemento() != null){
+                cantHijos+= 1;
+            }
+
+            if (nodov.getDer().getElemento() != null){
+                cantHijos += 1;
+
+            }
+
+            dictSimp.put(nodov.getElemento(),cantHijos);
+            toMapLogica(nodov.getDer(), dictSimp);
+            toMapLogica(nodov.getIzq(), dictSimp);
+        }
+
+
+    }
+    public Map<E, Integer> toMap1(){
+        Map<E,Integer> dictSimp = new ArrayMap<>();
+        toMapLogica(raiz,dictSimp);
+        return dictSimp;
+    }
+
+
+
+    public Map<E, Integer> toMap() {
+        Map<E, Integer> map = new ArrayMap<>();  // Crear el mapa vacío
+        toMapRecursivo(raiz, map);
+        return map;
+    }
+
+
+    private void toMapRecursivo(NodoABB<E> nodo, Map<E, Integer> map) {
+        if (nodo != null && nodo.getElemento() != null) {  // Si el nodo no es vacío
+            int hijos = 0;
+
+            // Contar la cantidad de hijos del nodo
+            if (nodo.getIzq().getElemento() != null) hijos++;
+            if (nodo.getDer().getElemento() != null) hijos++;
+
+            // Agregar el nodo y la cantidad de hijos al mapa
+            map.put(nodo.getElemento(), hijos);
+
+            // Llamar recursivamente para los hijos izquierdo y derecho
+            toMapRecursivo(nodo.getIzq(), map);
+            toMapRecursivo(nodo.getDer(), map);
+        }
+    }
+
+
+    public ArrayList<E> hojas(){
+        return elementosInOrder(raiz);
+    }
+
+    private ArrayList<E> elementosInOrder(NodoABB<E> nodov) {
+        ArrayList<E> elementos = new ArrayList<>(this.size);
+        recorrerIn(nodov, elementos);
+        return elementos;
+    }
+
+    private void recorrerIn(NodoABB<E> nodo, ArrayList<E> elementos) {
+        if (nodo != null && nodo.getElemento() != null) {
+            recorrerIn(nodo.getIzq(), elementos);
+            elementos.addLast(nodo.getElemento());
+            recorrerIn(nodo.getDer(), elementos);
+        }
     }
 
 }

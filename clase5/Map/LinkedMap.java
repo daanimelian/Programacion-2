@@ -32,7 +32,7 @@ public class LinkedMap<K extends Comparable<K>, V> implements Map<K, V> {
 
         }
 
-            return val;
+        return val;
     }
 
     @Override
