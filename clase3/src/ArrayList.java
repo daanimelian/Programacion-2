@@ -73,6 +73,18 @@ public class ArrayList <T> implements List<T> {
     public int getSize() {
         return size;
     }
+
+    @Override
+    public boolean contains(T o) {
+        boolean contains =false;
+        for (int i=0; i < lista.length && !contains; i++){
+            if (lista[i].equals(o)){
+                contains = true;
+            }
+        }
+        return contains;
+    }
+
     private void resize() {
         int nuevoTamanio = lista.length *2;
         T [] listaNueva = (T[]) new Object[nuevoTamanio];

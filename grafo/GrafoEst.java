@@ -1,5 +1,8 @@
 package grafo;
 
+import clase3.src.ArrayList;
+import clase3.src.List;
+
 public class GrafoEst<E> implements GrafoTDA<E> {
 	private int[][] mAdy; //Matriz de adyacencia
 	private E[] etiqs; //Vector para mapeo a índices
@@ -71,4 +74,22 @@ public class GrafoEst<E> implements GrafoTDA<E> {
 		int d = vert2Indice(v2);
 		return mAdy[o][d];
 	}
+
+	public List<E> dfs(E verticeInicio) {
+		List<E> recorrido = new ArrayList<>(100);
+		dfsRecursivo(verticeInicio,recorrido);
+		return recorrido;
+	}
+
+	private void dfsRecursivo(E vertice, List<E> recorrido) {
+		int actual = vert2Indice(vertice);
+		recorrido.addLast(etiqs[actual]);
+
+		for(int vecino = 0; vecino < cantNodos; vecino ++) {
+			if(mAdy[actual][vecino] != 0 && !recorrido.contains(etiqs[vecino])) {
+				dfsRecursivo(etiqs[vecino],recorrido);
+			}
+		}
+	}
+
 }

@@ -2,6 +2,8 @@ package clase3.src;
 
 import clase2.src.MyException;
 
+import java.util.Objects;
+
 public class LinkedList<T> implements List<T> {
     protected Node<T> head = null;
     protected Node<T> tail = null;
@@ -9,99 +11,243 @@ public class LinkedList<T> implements List<T> {
     protected Node<T> current;
 
 
-    public LinkedList() {}
 
-    public void addFirst(Node<T> node) {
+    private void addFirst(Node<T> n) {
         if (this.size == 0) {
-            this.head = node;
-            this.tail = node;
-            node.setPrev(null);
-            node.setNext(null);
+            this.head = n;
+            this.tail = n;
+            n.setPrev(null);
+            n.setNext(null);
+        } else {
+            n.setNext(this.head);
+            this.head.setPrev(n);
+            n.setPrev(null);
+            this.head = n;
         }
-        else {
-            node.setNext(this.head);
-            this.head.setPrev(node);
-            node.setPrev(null);
-            this.head = node;
-
-        }
-
-        this.current = node;
-        size++;
-
+        ++this.size;
     }
 
-    @Override
-    public void addFirst(T o) {
-        Node<T> node = new Node<>(o);
-        this.addFirst(node);
-
+    public void addFirst(T temp) {
+        Node<T> aux = new Node<>(temp);
+        this.addFirst(aux);
     }
 
-    public void addLast(Node<T> node){
+
+    private void addLast(Node<T> n) {
         if (this.size == 0) {
-            this.head = node;
-            this.tail = node;
-            node.setPrev(null);
-            node.setNext(null);
+            this.head = n;
+            this.tail = n;
+            n.setPrev(null);
+            n.setNext(null);
+        } else {
+            this.tail.setNext(n);
+            n.setPrev(this.tail);
+            n.setNext(null);
+            this.tail = n;
         }
-        else{
-            node.setPrev(this.tail);
-            this.tail.setNext(node);
-            node.setNext(null);
-            this.tail = node;
-        }
-        this.current = node;
-        size++;
+
+        ++this.size;
     }
 
-    @Override
-    public void addLast(T o) {
-        Node<T> node = new Node<>(o);
-        this.addLast(node);
-
+    public void addLast(T temp) {
+        Node<T> aux = new Node<>(temp);
+        this.addLast(aux);
     }
 
-    @Override
+
     public void removeFirst() {
-        if (this.size == 0) {
+        if (this.head == null) {
             throw new MyException("List is empty");
         }
+
         if (this.size == 1) {
             this.head = null;
             this.tail = null;
-        }
-        else {
+        } else {
             Node<T> newHead = this.head.getNext();
             this.head.setNext(null);
+            this.head.setPrev(null); // Por si acaso
             this.head = newHead;
             this.head.setPrev(null);
         }
+
+        --this.size;
+    }
+
+
+
+    public void removeLast() {
+        if (this.head == null) {
+            throw new MyException("List is empty");
+        }
+        else if (this.size == 1) {
+            this.head = null;
+            this.tail = null;
+
+        }
+        else {
+            Node<T> newTail = this.tail.getPrev();
+            this.tail.setNext(null);
+            this.tail.setPrev(null);
+            newTail.setNext(null);
+            this.tail = newTail;
+        }
+
         this.size--;
     }
 
-    @Override
-    public void removeLast() {
 
-    }
-
-    @Override
     public void removeElement(T o) {
+        if (this.head == null) {
+            throw new MyException("List is empty");
+        }
 
+        if (Objects.equals(this.head.data, o)) {
+            this.removeFirst();
+            return;
+        }
+
+        if (Objects.equals(this.tail.data, o)) {
+            this.removeLast();
+            return;
+        }
+
+        Node<T> curr = this.head.getNext();
+
+        while (curr != null && !Objects.equals(curr.data, o)) {
+            curr = curr.getNext();
+        }
+
+        if (curr == null) {
+            throw new MyException("Element not found");
+        }
+
+        // reconectar los nodos anterior y siguiente
+        Node<T> prev = curr.getPrev();
+        Node<T> next = curr.getNext();
+
+        prev.setNext(next);
+        if (next != null) {
+            next.setPrev(prev);
+        }
+
+        curr.setNext(null);
+        curr.setPrev(null);
+        --this.size;
     }
+
+
 
     @Override
     public T getFirst() {
-        return null;
+        return this.getHead().data;
+    }
+
+    public Node<T> getHead() {
+        return this.head;
+    }
+
+    public Node<T> getTail() {
+        return this.tail;
     }
 
     @Override
     public T getLast() {
-        return null;
+        return this.getTail().data;
+    }
+
+    public T getCurrent() {
+        return this.current.data;
     }
 
     @Override
     public int getSize() {
-        return 0;
+        return this.size;
+    }
+
+    @Override
+    public boolean contains(T o) {
+        Node<T> aux = this.head;
+        boolean contains = false;
+        if (aux.data.equals(o)){
+            contains=true;
+        }
+        else {
+            for (int a = 0; a < this.getSize() && !contains; a++) {
+                if (aux.data.equals(o)){
+                   contains=true;
+                }
+                else{
+                    aux = aux.getNext();
+                }
+
+            }
+        }
+        return contains;
+    }
+
+    public Node<T> getNodeByIndex(int index) {
+        if (this.head == null) {
+            throw new MyException("List is empty");
+        }
+
+        if(this.getSize()<=index){
+            throw new MyException("Index out of bounds");
+        }
+        Node<T> aux = this.head;
+        for(int i=0; i < index;i++) {
+            aux = aux.getNext();
+
+        }
+        return aux;
+    }
+
+    /*Sobre la implementación de LinkedList, agregar métodos que le
+permitan al usuario “indexar” la lista:
+• elementAt(int pos): devuelve el elemento ubicado en la posición pos, considerando el
+primer elemento como la posición 0.
+• removeAt(int pos): elimina el elemento ubicado en la posición pos, considerando el
+primer elemento como la posición 0.*/
+
+    public Node<T> elementAt(int pos){
+        Node<T> aux = this.head;
+        for(int a=0;a < pos; a++ ){
+            aux = aux.getNext();
+        }
+        return aux;
+
+    }
+
+    public void removeElementAt(int pos){
+        if (pos < 0 || pos >= size) {
+            throw new IndexOutOfBoundsException("Posición fuera de rango: " + pos);
+        }
+
+        Node<T> aux = head;
+        for (int i = 0; i < pos; i++) {
+            aux = aux.getNext();
+        }
+
+        if (aux == head) {
+            head = aux.getNext();
+            if (head != null) {
+                head.setPrev(null);
+            }
+        } else {
+            aux.getPrev().setNext(aux.getNext());
+        }
+
+        if (aux == tail) {
+            tail = aux.getPrev();
+            if (tail != null) {
+                tail.setNext(null);
+            }
+        } else {
+            aux.getNext().setPrev(aux.getPrev());
+        }
+
+        aux.setNext(null);
+        aux.setPrev(null);
+        size--;
     }
 }

@@ -11,4 +11,5 @@ public interface List<T> {
         T getLast();
         int getSize();
 
+        boolean contains(T o);
 }
