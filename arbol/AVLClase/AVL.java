@@ -1,5 +1,11 @@
 package arbol.AVLClase;
+import clase5.List.LinkedList;
+import clase5.Map.ArrayMap;
+import clase5.Map.LinkedMap;
+import clase5.Map.Map;
+
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class AVL<E extends Comparable<E>> implements AVLTDA<E> {
 	private final Comparator<E> comp;
@@ -142,7 +148,6 @@ public class AVL<E extends Comparable<E>> implements AVLTDA<E> {
         return minValueNode(root).data;
     }
 
-
     public String toString() {
     	String salida=inOrderTraversalString(root);
     	return salida.substring(0,salida.length()-2);
@@ -155,5 +160,33 @@ public class AVL<E extends Comparable<E>> implements AVLTDA<E> {
     }
     public NodoAVL<E> getRoot(){
         return root;
+    }
+
+    public LinkedList<NodoAVL<E>> nodesInOrder(){
+        LinkedList<NodoAVL<E>> lista = new LinkedList<>();
+        nodesInOrderAlgorithm(root,lista);
+        return lista;
+    }
+
+    private void nodesInOrderAlgorithm(NodoAVL<E> node, LinkedList<NodoAVL<E>> lista) {
+        if (node != null) {
+            nodesInOrderAlgorithm(node.left, lista);
+            lista.addLast(node);
+            nodesInOrderAlgorithm(node.right, lista);
+        }
+    }
+
+    public Map<E, Integer> alturasSubarboles(){
+        Map<E, Integer> map = new LinkedMap<>();
+        alturasSubarbolesAlgoritmo(root,map);
+        return map;
+    }
+
+    private void alturasSubarbolesAlgoritmo(NodoAVL<E> node, Map<E, Integer> map) {
+        if (node != null && node.data != null) {
+            map.put(node.data, node.height);
+            alturasSubarbolesAlgoritmo(node.left, map);
+            alturasSubarbolesAlgoritmo(node.right, map);
+        }
     }
 }

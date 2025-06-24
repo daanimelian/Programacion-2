@@ -160,15 +160,16 @@ public class LinkedMap<K extends Comparable<K>, V> implements Map<K, V> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Entry<K, V>[] entries() {
-        if(size==0) throw new MyException("El diccionario esta vacio.");
-        Entry<K, V>[] entries = (Entry<K, V>[])new Object[size];
-        Node<Entrada<K,V>> element=head;
-        for(int i=0; i<size; i++) {
-            Entry<K, V> entry = element.getElement();
-            entries[i] = entry;
-            element=element.getNext();
+        Entry<K, V>[] result = new Entry[this.size];
+        int i = 0;
+        Node<Entrada<K,V>> current = this.head;
+        while (current != null && i < this.size) {
+            result[i++] = current.getElement();
+            current = current.getNext();
         }
-        return entries;
+        return result;
     }
+
 }

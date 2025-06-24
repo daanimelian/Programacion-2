@@ -1,5 +1,8 @@
 package grafo;
+import clase5.List.LinkedList;
 import clase3.src.LinkedStack;
+import clase3.src.List;
+import clase5.Map.MyException;
 
 public class GrafoDin<E> implements GrafoTDA<E> {
 	private NodoVertice<E> origen;
@@ -159,7 +162,7 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 	}
 
 
-	public void algoritmoDFS(E origenDFS) {
+	public E[] algoritmoDFS(E origenDFS) {
 		//Pila de nodos vertice por visitar
 		LinkedStack<NodoVertice<E>> stack = new LinkedStack<>();
 
@@ -173,7 +176,7 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 		NodoVertice<E> nodoOrigen = vert2Nodo(origenDFS);
 
 		//Si es null, termina la ejecucion
-		if (nodoOrigen == null) return;
+		if (nodoOrigen == null) throw new MyException("No existe el nodo de origen.");
 
 		//Lo agrego a la pila de nodos por visitar
 		stack.push(nodoOrigen);
@@ -189,7 +192,7 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 				visitados[count] = actual.getVertice();
 				count++;
 
-				// Agregamos  todos los nodos "vecinos" al stack y vuelvo a arrancar el while
+				// Agregamos todos los nodos "vecinos" al stack y vuelvo a arrancar el while
 				NodoArista<E> arista = actual.getAristas();
 				while (arista != null) {
 					stack.push(arista.getVerticeDestino());
@@ -197,7 +200,67 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 				}
 			}
 		}
+		return visitados;
 	}
+
+	public boolean hayCiclos() {
+		LinkedList<E> visitados = new LinkedList<>();
+		LinkedList<E> enRecorrido = new LinkedList<>();
+
+		E[] vertices = vertices();
+		for (int i = 0; i < vertices.length; i++) {
+			E vertice = vertices[i];
+			if (!contiene(visitados, vertice)) {
+				if (dfsTieneCicloDirigido(vertice, visitados, enRecorrido)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean dfsTieneCicloDirigido(E actual, LinkedList<E> visitados, LinkedList<E> enRecorrido) {
+		visitados.addLast(actual);
+		enRecorrido.addLast(actual);
+
+		NodoVertice<E> nodo = vert2Nodo(actual);
+		NodoArista<E> arista = nodo.getAristas();
+
+		while (arista != null) {
+			E destino = arista.getVerticeDestino().getVertice();
+
+			if (!contiene(visitados, destino)) {
+				if (dfsTieneCicloDirigido(destino, visitados, enRecorrido)) {
+					return true;
+				}
+			} else if (contiene(enRecorrido, destino)) {
+				return true; // hay ciclo
+			}
+
+			arista = arista.getSigArista();
+		}
+
+		eliminar(enRecorrido, actual); // al salir del nodo actual, lo quito del recorrido
+		return false;
+	}
+
+	private boolean contiene(LinkedList<E> lista, E elem) {
+		for (int i = 0; i < lista.getSize(); i++) {
+			if (lista.elementAt(i).equals(elem)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	private void eliminar(LinkedList<E> lista, E elem) {
+		try {
+			lista.remove(elem);
+		} catch (MyException e) {
+			// No pasa nada si no está: no hay que eliminar
+		}
+	}
+
+
 
 	private boolean estaEnArreglo(E vertice, E[] arreglo, int count) {
 		// recorre el arreglo para saber si el vertice esta
@@ -210,6 +273,7 @@ public class GrafoDin<E> implements GrafoTDA<E> {
 		}
 		return esta;
 	}
+
 
 
 

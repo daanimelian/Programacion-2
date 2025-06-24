@@ -233,8 +233,17 @@ public class ABBImple<E extends Comparable<E>> implements ABBTDA<E> {
     }
 
 
-    public ArrayList<E> hojas(){
-        return elementosInOrder(raiz);
+    public ArrayList<Integer> elementosEnRango(int min, int max) {
+
+        ArrayList<Integer> elementosTotales = (ArrayList<Integer>) elementosInOrder(raiz);
+        ArrayList<Integer> elementosEnRango = new ArrayList<>(1);
+        for(int i = 0; i < elementosTotales.getSize(); i++) {
+            if (elementosTotales.get(i) > min && elementosTotales.get(i)<max){
+                elementosEnRango.addLast(elementosTotales.get(i));
+            }
+        }
+
+        return elementosEnRango;
     }
 
     private ArrayList<E> elementosInOrder(NodoABB<E> nodov) {

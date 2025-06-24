@@ -1,9 +1,9 @@
 package arbol.ABBClase;
 
+import clase3.src.ArrayList;
 import clase5.Map.Map;
 import clase5.Map.ArrayMap;
 import clase5.Map.Entry;
-
 import java.util.Comparator;
 
 public class Test {
@@ -27,6 +27,12 @@ public class Test {
 		System.out.println("Elementos del ABB con la cantidad de hijos:");
 		for (Entry<Integer, Integer> entry : mapaHijos.entries()) {
 			System.out.println("Elemento: " + entry.getKey() + ", Hijos: " + entry.getValue());
+		}
+
+		ArrayList<Integer> rango = arbol.elementosEnRango(1,19);
+		System.out.println("Elementos del ABB con la cantidad de rangos:");
+		for (int i=0; i<rango.getSize(); i++){
+			System.out.println("Elemento: " + rango.get(i));
 		}
 	}
 }

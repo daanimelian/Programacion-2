@@ -42,5 +42,28 @@ public class metodos {
         return stack.isEmpty();
     }
 
+    public static boolean isBalancedV2(String input) {
+        LinkedStack<Character> stack = new LinkedStack<>();
+        int cantComillas = 0;
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c == '"') {
+                cantComillas++;
+            }
+            if (cantComillas % 2 == 0) {
+                if (c == '(') {
+                    stack.push(c);
+                } else if (c == ')') {
+                    if (stack.isEmpty()) {
+                        return false;
+                    }
+                    stack.pop();
+                }
+            }
+        }
+
+            return stack.isEmpty();
+        }
+
 
 }
